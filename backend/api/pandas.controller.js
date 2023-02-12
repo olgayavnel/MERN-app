@@ -9,7 +9,7 @@ export default class PandasController {
   static async apiGetPandas(req, res, next) {
     const pandasPerPage = req.query.pandasPerPage
       ? parseInt(req.query.pandasPerPage, 10)
-      : 20;
+      : 10;
     const page = req.query.page ? parseInt(req.query.page, 10) : 0;
 
     let filters = {};
@@ -35,5 +35,21 @@ export default class PandasController {
       total_results: totalNumPandas,
     };
     res.json(response);
+  }
+
+  // handling the route of getting the detail of a single panda
+  static async apiGetPandaById(req, res, next) {
+    const pandaId = req.params.id;
+    try {
+      // !PROBLEM HERE
+      const panda = await PandasDAO.getPandaById(pandaId);
+      console.log(
+        '🚀 ~ file: pandas.controller.js:45 ~ PandasController ~ apiGetPandaById ~ panda',
+        panda
+      );
+      res.json({ panda });
+    } catch (e) {
+      res.status(404).json({ error: e.message });
+    }
   }
 }

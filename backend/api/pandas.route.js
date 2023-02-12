@@ -5,4 +5,7 @@ const router = express.Router();
 
 router.route('/').get(PandasController.apiGetPandas);
 
+// getting the detail of a single panda
+router.route('/:id').get(PandasController.apiGetPandaById);
+
 export default router;

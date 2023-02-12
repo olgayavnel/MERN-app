@@ -1,5 +1,5 @@
 import mongodb from 'mongodb';
-const ObjectId = mongodb.ObjectID;
+import { ObjectId } from 'mongodb';
 
 let pandas; // stores a reference to the db
 
@@ -23,7 +23,7 @@ export default class PandasDAO {
   static async getPandas({
     filters = null,
     page = 0,
-    pandasPerPage = 20,
+    pandasPerPage = 10,
   } = {}) {
     let query;
     if (filters) {
@@ -59,6 +59,19 @@ export default class PandasDAO {
         `Unable to convert cursor to array or problem counting documents, ${e}`
       );
       return { pandasList: [], totalNumPandas: 0 };
+    }
+  }
+
+  static async getPandaById(id) {
+    try {
+      const panda = await pandas.findOne({ _id: new ObjectId(id) });
+      if (!panda) {
+        throw new Error('Panda not found');
+      }
+      return panda;
+    } catch (e) {
+      console.error(`Unable to find panda, ${e}`);
+      throw e;
     }
   }
 }
