@@ -64,14 +64,54 @@ export default class PandasDAO {
 
   static async getPandaById(id) {
     try {
-      const panda = await pandas.findOne({ _id: new ObjectId(id) });
-      if (!panda) {
-        throw new Error('Panda not found');
-      }
-      return panda;
+      const pipeline = [
+        {
+          $match: {
+            _id: new ObjectId(id),
+          },
+        },
+      ];
+      return await pandas.aggregate(pipeline).next();
     } catch (e) {
-      console.error(`Unable to find panda, ${e}`);
+      console.error(`Something went wrong in getPandaById: ${e}`);
       throw e;
+    }
+  }
+
+  static async addPanda(name, age, location) {
+    try {
+      const pandaDoc = { name, age, location };
+      return await pandas.insertOne(pandaDoc);
+    } catch (e) {
+      console.error(`Unable to post panda, ${e}`);
+      return { error: e };
+    }
+  }
+
+  static async updatePanda(pandaId, name, age, location) {
+    try {
+      const updateResponse = await pandas.updateOne(
+        { _id: new ObjectId(pandaId) },
+        { $set: { name, age, location } }
+      );
+
+      return updateResponse;
+    } catch (e) {
+      console.error(`Unable to update panda, ${e}`);
+      return { error: e };
+    }
+  }
+
+  static async deletePanda(pandaId) {
+    try {
+      const deleteResponse = await pandas.deleteOne({
+        _id: new ObjectId(pandaId),
+      });
+
+      return deleteResponse;
+    } catch (e) {
+      console.error(`Unable to delete panda, ${e}`);
+      return { error: e };
     }
   }
 }

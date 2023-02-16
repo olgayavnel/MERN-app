@@ -23,9 +23,15 @@ const PandaList: React.FC = () => {
   };
 
   const handleSubmit = (panda: Panda) => {
-    setShowForm(false);
-    // Add the new panda to the list of pandas
-    // ...
+    console.log('Panda: ', panda);
+    pandasDataService
+      .create(panda)
+      .then((response) => {
+        retrievePandas();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
