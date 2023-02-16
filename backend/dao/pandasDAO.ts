@@ -1,18 +1,39 @@
-import mongodb from 'mongodb';
-import { ObjectId } from 'mongodb';
+import { Collection, Db, ObjectId } from 'mongodb';
 
-let pandas; // stores a reference to the db
+interface Panda {
+  _id?: ObjectId;
+  name: string;
+  age: number;
+  location: string;
+}
+
+interface Filter {
+  name?: string;
+  age?: number;
+  location?: string;
+}
+
+interface Paging {
+  page?: number;
+  pandasPerPage?: number;
+}
+
+// let pandas; // stores a reference to the db
 
 /**
  * The PandasDAO class provides a data access layer that interacts with the database to retrieve and store data.
  */
 export default class PandasDAO {
-  static async injectDB(conn) {
-    if (pandas) {
+  private static pandas: Collection;
+
+  static async injectDB(conn: any) {
+    if (PandasDAO.pandas) {
       return;
     }
     try {
-      pandas = await conn.db(process.env.PANDAS_DB_NAME).collection('pandas');
+      PandasDAO.pandas = await conn
+        .db(process.env.PANDAS_DB_NAME)
+        .collection('pandas');
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in pandasDAO: ${e}`
@@ -21,11 +42,15 @@ export default class PandasDAO {
   }
 
   static async getPandas({
-    filters = null,
+    filters = {},
     page = 0,
     pandasPerPage = 10,
-  } = {}) {
-    let query;
+  }: {
+    filters: Filter;
+    page: number;
+    pandasPerPage: number;
+  }) {
+    let query = {};
     if (filters) {
       if ('name' in filters) {
         query = { $text: { $search: filters['name'] } };
@@ -39,7 +64,7 @@ export default class PandasDAO {
     let cursor;
 
     try {
-      cursor = await pandas.find(query);
+      cursor = await PandasDAO.pandas.find(query);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return { pandasList: [], totalNumPandas: 0 };
@@ -51,7 +76,7 @@ export default class PandasDAO {
 
     try {
       const pandasList = await displayCursor.toArray();
-      const totalNumPandas = await pandas.countDocuments(query);
+      const totalNumPandas = await PandasDAO.pandas.countDocuments(query);
 
       return { pandasList, totalNumPandas };
     } catch (e) {
@@ -62,7 +87,7 @@ export default class PandasDAO {
     }
   }
 
-  static async getPandaById(id) {
+  static async getPandaById(id: string) {
     try {
       const pipeline = [
         {
@@ -71,26 +96,31 @@ export default class PandasDAO {
           },
         },
       ];
-      return await pandas.aggregate(pipeline).next();
+      return await PandasDAO.pandas.aggregate(pipeline).next();
     } catch (e) {
       console.error(`Something went wrong in getPandaById: ${e}`);
       throw e;
     }
   }
 
-  static async addPanda(name, age, location) {
+  static async addPanda(name: string, age: number, location: string) {
     try {
       const pandaDoc = { name, age, location };
-      return await pandas.insertOne(pandaDoc);
+      return await PandasDAO.pandas.insertOne(pandaDoc);
     } catch (e) {
       console.error(`Unable to post panda, ${e}`);
       return { error: e };
     }
   }
 
-  static async updatePanda(pandaId, name, age, location) {
+  static async updatePanda(
+    pandaId: string,
+    name: string,
+    age: number,
+    location: string
+  ) {
     try {
-      const updateResponse = await pandas.updateOne(
+      const updateResponse = await PandasDAO.pandas.updateOne(
         { _id: new ObjectId(pandaId) },
         { $set: { name, age, location } }
       );
@@ -102,9 +132,9 @@ export default class PandasDAO {
     }
   }
 
-  static async deletePanda(pandaId) {
+  static async deletePanda(pandaId: string) {
     try {
-      const deleteResponse = await pandas.deleteOne({
+      const deleteResponse = await PandasDAO.pandas.deleteOne({
         _id: new ObjectId(pandaId),
       });
 

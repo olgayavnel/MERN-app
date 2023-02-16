@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "strict": true
+  },
+  // include api and dao folders from backend folder
+  "include": ["api", "dao"],
+  "exclude": ["node_modules"]
+}
