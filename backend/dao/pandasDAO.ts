@@ -13,18 +13,13 @@ interface Filter {
   location?: string;
 }
 
-interface Paging {
-  page?: number;
-  pandasPerPage?: number;
-}
-
 // let pandas; // stores a reference to the db
 
 /**
  * The PandasDAO class provides a data access layer that interacts with the database to retrieve and store data.
  */
 export default class PandasDAO {
-  private static pandas: Collection;
+  private static pandas: Collection<Panda>;
 
   static async injectDB(conn: any) {
     if (PandasDAO.pandas) {
@@ -49,7 +44,7 @@ export default class PandasDAO {
     filters: Filter;
     page: number;
     pandasPerPage: number;
-  }) {
+  }): Promise<{ pandasList: Panda[]; totalNumPandas: number }> {
     let query = {};
     if (filters) {
       if ('name' in filters) {
