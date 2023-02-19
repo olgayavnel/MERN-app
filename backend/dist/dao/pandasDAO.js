@@ -50,7 +50,7 @@ class PandasDAO {
             }
             catch (e) {
                 console.error(`Unable to issue find command, ${e}`);
-                return { pandasList: [], totalNumPandas: 0 };
+                return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
             }
             const displayCursor = cursor
                 .limit(pandasPerPage)
@@ -58,11 +58,12 @@ class PandasDAO {
             try {
                 const pandasList = yield displayCursor.toArray();
                 const totalNumPandas = yield PandasDAO.pandas.countDocuments(query);
-                return { pandasList, totalNumPandas };
+                const totalPages = Math.ceil(totalNumPandas / pandasPerPage);
+                return { pandasList, totalNumPandas, totalPages };
             }
             catch (e) {
                 console.error(`Unable to convert cursor to array or problem counting documents, ${e}`);
-                return { pandasList: [], totalNumPandas: 0 };
+                return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
             }
         });
     }

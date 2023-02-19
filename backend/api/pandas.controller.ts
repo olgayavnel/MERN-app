@@ -16,12 +16,12 @@ export default class PandasController {
     const pandasPerPage: number = req.query.pandasPerPage
       ? parseInt(req.query.pandasPerPage as string, 10)
       : 10;
+
     const page: number = req.query.page
-      ? parseInt(req.query.page as string, 10)
+      ? parseInt(req.query.page as string, 10) - 1
       : 0;
 
     let filters: Record<string, string> = {};
-    // let filters = {};
     if (req.query.age) {
       filters = { ...filters, age: req.query.age as string };
     } else if (req.query.location) {
@@ -30,18 +30,20 @@ export default class PandasController {
       filters = { ...filters, name: req.query.name as string };
     }
 
-    const { pandasList, totalNumPandas } = await PandasDAO.getPandas({
-      filters,
-      page,
-      pandasPerPage,
-    });
+    const { pandasList, totalNumPandas, totalPages } =
+      await PandasDAO.getPandas({
+        filters,
+        page,
+        pandasPerPage,
+      });
 
     let response = {
       pandas: pandasList,
-      page: page,
+      page: page + 1,
       filters: filters,
       entries_per_page: pandasPerPage,
       total_results: totalNumPandas,
+      totalPages: totalPages,
     };
     res.json(response);
   }

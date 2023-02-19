@@ -25,10 +25,9 @@ class PandasController {
                 ? parseInt(req.query.pandasPerPage, 10)
                 : 10;
             const page = req.query.page
-                ? parseInt(req.query.page, 10)
+                ? parseInt(req.query.page, 10) - 1
                 : 0;
             let filters = {};
-            // let filters = {};
             if (req.query.age) {
                 filters = Object.assign(Object.assign({}, filters), { age: req.query.age });
             }
@@ -38,17 +37,18 @@ class PandasController {
             else if (req.query.name) {
                 filters = Object.assign(Object.assign({}, filters), { name: req.query.name });
             }
-            const { pandasList, totalNumPandas } = yield pandasDAO_1.default.getPandas({
+            const { pandasList, totalNumPandas, totalPages } = yield pandasDAO_1.default.getPandas({
                 filters,
                 page,
                 pandasPerPage,
             });
             let response = {
                 pandas: pandasList,
-                page: page,
+                page: page + 1,
                 filters: filters,
                 entries_per_page: pandasPerPage,
                 total_results: totalNumPandas,
+                totalPages: totalPages,
             };
             res.json(response);
         });

@@ -44,7 +44,11 @@ export default class PandasDAO {
     filters: Filter;
     page: number;
     pandasPerPage: number;
-  }): Promise<{ pandasList: Panda[]; totalNumPandas: number }> {
+  }): Promise<{
+    pandasList: Panda[];
+    totalNumPandas: number;
+    totalPages: number;
+  }> {
     let query = {};
     if (filters) {
       if ('name' in filters) {
@@ -62,7 +66,7 @@ export default class PandasDAO {
       cursor = await PandasDAO.pandas.find(query);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
-      return { pandasList: [], totalNumPandas: 0 };
+      return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
     }
 
     const displayCursor = cursor
@@ -72,13 +76,13 @@ export default class PandasDAO {
     try {
       const pandasList = await displayCursor.toArray();
       const totalNumPandas = await PandasDAO.pandas.countDocuments(query);
-
-      return { pandasList, totalNumPandas };
+      const totalPages = Math.ceil(totalNumPandas / pandasPerPage);
+      return { pandasList, totalNumPandas, totalPages };
     } catch (e) {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`
       );
-      return { pandasList: [], totalNumPandas: 0 };
+      return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
     }
   }
 
