@@ -28,8 +28,24 @@ const PandaList: React.FC = () => {
   const handleSubmit = (panda: Panda) => {
     pandasDataService
       .create(panda)
-      .then((response) => {
+      .then(() => {
         retrievePandas(currentPage);
+        setShowForm(false); // hides the form after submission + resets the form
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleDelete = (pandaId: number) => {
+    pandasDataService
+      .delete(pandaId)
+      .then(() => {
+        if (pandas.length === 1 && currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        } else {
+          retrievePandas(currentPage);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -53,17 +69,25 @@ const PandaList: React.FC = () => {
       {showForm && <AddPandaForm onSubmit={handleSubmit} />}
       <ul>
         {pandas.map((panda: any) => (
-          <li key={panda.id}>
+          <li key={panda._id}>
             Name: {panda.name} - Age: {panda.age} - Location: {panda.location}
+            <button onClick={() => handleDelete(panda._id)}>Delete</button>
           </li>
         ))}
       </ul>
       <div>
-        {pageNumbers.map((pageNumber) => (
-          <button key={pageNumber} onClick={() => handlePageClick(pageNumber)}>
-            {pageNumber}
-          </button>
-        ))}
+        {totalPages > 1 && (
+          <div>
+            {pageNumbers.map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageClick(pageNumber)}
+              >
+                {pageNumber}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
