@@ -6,16 +6,19 @@ import { Panda } from './models';
 const PandaList: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [pandas, setPandas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    retrievePandas();
-  }, []);
+    retrievePandas(currentPage);
+  }, [currentPage]);
 
-  const retrievePandas = () => {
+  const retrievePandas = (pageNumber: number) => {
     pandasDataService
-      .getAll()
+      .getAll(pageNumber)
       .then((response) => {
         setPandas(response.data.pandas);
+        setTotalPages(response.data.totalPages);
       })
       .catch((e) => {
         console.log(e);
@@ -26,12 +29,21 @@ const PandaList: React.FC = () => {
     pandasDataService
       .create(panda)
       .then((response) => {
-        retrievePandas();
+        retrievePandas(currentPage);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div>
@@ -42,11 +54,17 @@ const PandaList: React.FC = () => {
       <ul>
         {pandas.map((panda: any) => (
           <li key={panda.id}>
-            ID: {panda.id}. Name: {panda.name} - Age: {panda.age} - Location:{' '}
-            {panda.location}
+            Name: {panda.name} - Age: {panda.age} - Location: {panda.location}
           </li>
         ))}
       </ul>
+      <div>
+        {pageNumbers.map((pageNumber) => (
+          <button key={pageNumber} onClick={() => handlePageClick(pageNumber)}>
+            {pageNumber}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
