@@ -23,7 +23,6 @@ const PandaList: React.FC = () => {
   };
 
   const handleSubmit = (panda: Panda) => {
-    console.log('Panda: ', panda);
     pandasDataService
       .create(panda)
       .then((response) => {
@@ -44,7 +43,7 @@ const PandaList: React.FC = () => {
         {pandas.map((panda: any) => (
           <li key={panda.id}>
             ID: {panda.id}. Name: {panda.name} - Age: {panda.age} - Location:{' '}
-            {panda.location} - Description: {panda.description}
+            {panda.location}
           </li>
         ))}
       </ul>

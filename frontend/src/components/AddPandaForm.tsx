@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Panda } from './models';
 
@@ -7,25 +7,19 @@ interface Props {
 }
 
 const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
-  const [panda, setPanda] = useState({
+  const initialValues = {
     id: '',
     name: '',
     age: 0,
     location: '',
-  });
+  };
 
-  const handleSubmit = (values: any) => {
-    setPanda({
-      id: values.id,
-      name: values.name,
-      age: values.age,
-      location: values.location,
-    });
-    onSubmit(panda);
+  const handleSubmit = (values: Panda) => {
+    onSubmit(values);
   };
 
   return (
-    <Formik initialValues={panda} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
         <Field type='text' name='name' placeholder='Panda Name' />
         <Field type='number' name='age' placeholder='Panda Age' />
