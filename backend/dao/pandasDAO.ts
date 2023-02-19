@@ -139,4 +139,20 @@ export default class PandasDAO {
       return { error: e };
     }
   }
+
+  static async getPandaByName(name: string) {
+    try {
+      const pipeline = [
+        {
+          $match: {
+            name: name,
+          },
+        },
+      ];
+      return await PandasDAO.pandas.aggregate(pipeline).next();
+    } catch (e) {
+      console.error(`Something went wrong in getPandaByName: ${e}`);
+      throw e;
+    }
+  }
 }

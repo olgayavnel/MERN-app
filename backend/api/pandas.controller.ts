@@ -1,4 +1,10 @@
-import PandasDAO from '../dao/pandasDAO.js';
+import { Request, Response } from 'express';
+import PandasDAO from '../dao/pandasDAO';
+
+interface PandaUpdateResponse {
+  modifiedCount?: number;
+  error?: unknown;
+}
 
 /**
  * PandasController class acts as a controller that
@@ -6,19 +12,22 @@ import PandasDAO from '../dao/pandasDAO.js';
  * communicates with the DAO layer.
  */
 export default class PandasController {
-  static async apiGetPandas(req, res) {
-    const pandasPerPage = req.query.pandasPerPage
-      ? parseInt(req.query.pandasPerPage, 10)
+  static async apiGetPandas(req: Request, res: Response): Promise<void> {
+    const pandasPerPage: number = req.query.pandasPerPage
+      ? parseInt(req.query.pandasPerPage as string, 10)
       : 10;
-    const page = req.query.page ? parseInt(req.query.page, 10) : 0;
+    const page: number = req.query.page
+      ? parseInt(req.query.page as string, 10)
+      : 0;
 
-    let filters = {};
+    let filters: Record<string, string> = {};
+    // let filters = {};
     if (req.query.age) {
-      filters.age = req.query.age;
+      filters = { ...filters, age: req.query.age as string };
     } else if (req.query.location) {
-      filters.location = req.query.location;
+      filters = { ...filters, location: req.query.location as string };
     } else if (req.query.name) {
-      filters.name = req.query.name;
+      filters = { ...filters, name: req.query.name as string };
     }
 
     const { pandasList, totalNumPandas } = await PandasDAO.getPandas({
@@ -38,9 +47,9 @@ export default class PandasController {
   }
 
   // handling the route of getting the detail of a single panda
-  static async apiGetPandaById(req, res) {
+  static async apiGetPandaById(req: Request, res: Response): Promise<void> {
     try {
-      let id = req.params.id || {};
+      let id: string = req.params.id || '';
       let panda = await PandasDAO.getPandaById(id);
       if (!panda) {
         res.status(404).json({ error: 'Not found' });
@@ -54,11 +63,11 @@ export default class PandasController {
   }
 
   // handling the route of creating a new panda
-  static async apiCreatePanda(req, res) {
+  static async apiCreatePanda(req: Request, res: Response): Promise<void> {
     try {
-      const pandaName = req.body.name;
-      const pandaAge = req.body.age;
-      const pandaLocation = req.body.location;
+      const pandaName: string = req.body.name;
+      const pandaAge: number = req.body.age;
+      const pandaLocation: string = req.body.location;
       const pandaResponse = await PandasDAO.addPanda(
         pandaName,
         pandaAge,
@@ -71,21 +80,22 @@ export default class PandasController {
   }
 
   // handling the route of updating a panda
-  static async apiUpdatePanda(req, res) {
+  static async apiUpdatePanda(req: Request, res: Response): Promise<void> {
     try {
-      const pandaId = req.params.id;
-      const pandaName = req.body.name;
-      const pandaAge = req.body.age;
-      const pandaLocation = req.body.location;
-      const pandaResponse = await PandasDAO.updatePanda(
+      const pandaId: string = req.params.id;
+      const pandaName: string = req.body.name;
+      const pandaAge: number = req.body.age;
+      const pandaLocation: string = req.body.location;
+      const pandaResponse: PandaUpdateResponse = await PandasDAO.updatePanda(
         pandaId,
         pandaName,
         pandaAge,
         pandaLocation
       );
-      var { error } = pandaResponse;
-      if (error) {
-        res.status(400).json({ error });
+
+      if (pandaResponse.error) {
+        res.status(400).json({ error: pandaResponse.error });
+        return;
       }
 
       if (pandaResponse.modifiedCount === 0) {
@@ -101,7 +111,7 @@ export default class PandasController {
   }
 
   // handling the route of deleting a panda
-  static async apiDeletePanda(req, res) {
+  static async apiDeletePanda(req: Request, res: Response): Promise<void> {
     try {
       const pandaId = req.params.id;
       const pandaResponse = await PandasDAO.deletePanda(pandaId);
@@ -112,15 +122,15 @@ export default class PandasController {
   }
 
   // handling the route of getting the detail of a single panda by name
-  static async apiGetPandaByName(req, res) {
+  static async apiGetPandaByName(req: Request, res: Response): Promise<void> {
     try {
-      let name = req.params.name || {};
-      let panda = await PandasDAO.getPandaByName(name);
-      if (!panda) {
+      let name: string = req.params.name || '';
+      let pandaResponse = await PandasDAO.getPandaByName(name);
+      if (!pandaResponse) {
         res.status(404).json({ error: 'Not found' });
         return;
       }
-      res.json(panda);
+      res.json(pandaResponse);
     } catch (e) {
       console.log(`api, ${e}`);
       res.status(500).json({ error: e });

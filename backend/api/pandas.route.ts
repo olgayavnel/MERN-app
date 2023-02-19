@@ -1,5 +1,5 @@
 import express from 'express';
-import PandasController from './pandas.controller.js';
+import PandasController from './pandas.controller';
 
 const router = express.Router();
 
