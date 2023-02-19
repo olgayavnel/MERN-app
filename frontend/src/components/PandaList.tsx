@@ -67,14 +67,16 @@ const PandaList: React.FC = () => {
         {showForm ? 'Cancel' : 'Add Panda'}
       </button>
       {showForm && <AddPandaForm onSubmit={handleSubmit} />}
-      <ul>
-        {pandas.map((panda: any) => (
-          <li key={panda._id}>
-            Name: {panda.name} - Age: {panda.age} - Location: {panda.location}
-            <button onClick={() => handleDelete(panda._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {pandas.length > 0 && (
+        <ul>
+          {pandas.map((panda: any) => (
+            <li key={panda._id}>
+              Name: {panda.name} - Age: {panda.age} - Location: {panda.location}
+              <button onClick={() => handleDelete(panda._id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
       <div>
         {totalPages > 1 && (
           <div>
