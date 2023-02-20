@@ -5,7 +5,7 @@ class PandasDataService {
     return http.get(`pandas?page=${page}`);
   }
 
-  get(id) {
+  getOne(id) {
     return http.get(`pandas/${id}`);
   }
 

@@ -8,6 +8,7 @@ interface Props {
 
 const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
   const initialValues = {
+    _id: '',
     name: '',
     age: 0,
     location: '',

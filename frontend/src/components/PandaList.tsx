@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import pandasDataService from '../api/services';
 import AddPandaForm from './AddPandaForm';
 import { Panda } from './models';
 
 const PandaList: React.FC = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [pandas, setPandas] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [pandas, setPandas] = useState<Panda[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   useEffect(() => {
     retrievePandas(currentPage);
@@ -37,7 +38,7 @@ const PandaList: React.FC = () => {
       });
   };
 
-  const handleDelete = (pandaId: number) => {
+  const handleDelete = (pandaId: string) => {
     pandasDataService
       .delete(pandaId)
       .then(() => {
@@ -71,7 +72,8 @@ const PandaList: React.FC = () => {
         <ul>
           {pandas.map((panda: any) => (
             <li key={panda._id}>
-              Name: {panda.name} - Age: {panda.age} - Location: {panda.location}
+              Name: <Link to={`/pandas/${panda._id}`}>{panda.name}</Link> - Age:{' '}
+              {panda.age} - Location: {panda.location}
               <button onClick={() => handleDelete(panda._id)}>Delete</button>
             </li>
           ))}
