@@ -16,9 +16,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
-    "react-slugify": "^3.0.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

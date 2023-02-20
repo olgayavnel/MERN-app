@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import pandasDataService from '../api/services';
 import AddPandaForm from './AddPandaForm';
+import EditPandaForm from './EditPandaForm';
 import { Panda } from './models';
 
 const PandaList: React.FC = () => {
-  const [showForm, setShowForm] = useState<boolean>(false);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [currentPanda, setCurrentPanda] = useState<Panda | null>(null);
   const [pandas, setPandas] = useState<Panda[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -26,16 +29,40 @@ const PandaList: React.FC = () => {
       });
   };
 
-  const handleSubmit = (panda: Panda) => {
+  const handleAddSubmit = (panda: Panda) => {
     pandasDataService
       .create(panda)
       .then(() => {
         retrievePandas(currentPage);
-        setShowForm(false); // hides the form after submission + resets the form
+        setShowAddForm(false); // hides the form after submission + resets the form
       })
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  const handleEditSubmit = (panda: Panda) => {
+    if (JSON.stringify(panda._id) === JSON.stringify(currentPanda?._id)) {
+      setShowEditForm(false);
+      setCurrentPanda(null);
+      return;
+    }
+
+    pandasDataService
+      .update(currentPanda?._id, panda)
+      .then(() => {
+        retrievePandas(currentPage);
+        setShowEditForm(false);
+        setCurrentPanda(null);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleEdit = (panda: Panda) => {
+    setCurrentPanda(panda);
+    setShowEditForm(true);
   };
 
   const handleDelete = (pandaId: string) => {
@@ -64,20 +91,32 @@ const PandaList: React.FC = () => {
 
   return (
     <div>
-      <button onClick={() => setShowForm(!showForm)}>
-        {showForm ? 'Cancel' : 'Add Panda'}
+      <button onClick={() => setShowAddForm(!showAddForm)}>
+        {showAddForm ? 'Cancel' : 'Add Panda'}
       </button>
-      {showForm && <AddPandaForm onSubmit={handleSubmit} />}
+      {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
+
       {pandas.length > 0 && (
         <ul>
           {pandas.map((panda: any) => (
             <li key={panda._id}>
               Name: <Link to={`/pandas/${panda._id}`}>{panda.name}</Link> - Age:{' '}
               {panda.age} - Location: {panda.location}
+              <button onClick={() => handleEdit(panda)}>Edit Panda</button>
               <button onClick={() => handleDelete(panda._id)}>Delete</button>
             </li>
           ))}
         </ul>
+      )}
+      {showEditForm && currentPanda && (
+        <EditPandaForm
+          panda={currentPanda}
+          onSubmit={handleEditSubmit}
+          onCancel={() => {
+            setShowEditForm(false);
+            setCurrentPanda(null);
+          }}
+        />
       )}
       <div>
         {totalPages > 1 && (

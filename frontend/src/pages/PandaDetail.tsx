@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import pandasDataService from '../api/services';
-import { Panda } from './models';
+import { Panda } from '../components/models';
 
 const PandaDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import PandaDetail from './components/PandaDetail';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PandaDetail from './pages/PandaDetail';
 import PandaList from './components/PandaList';
 import { NotFound } from './pages/NotFound';
 
