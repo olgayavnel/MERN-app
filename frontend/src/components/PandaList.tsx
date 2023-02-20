@@ -42,7 +42,7 @@ const PandaList: React.FC = () => {
   };
 
   const handleEditSubmit = (panda: Panda) => {
-    if (JSON.stringify(panda._id) === JSON.stringify(currentPanda?._id)) {
+    if (JSON.stringify(panda) === JSON.stringify(currentPanda)) {
       setShowEditForm(false);
       setCurrentPanda(null);
       return;
