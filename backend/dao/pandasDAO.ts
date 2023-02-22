@@ -13,6 +13,12 @@ interface Filter {
   location?: string;
 }
 
+interface GetPandasOptions {
+  filters?: Filter;
+  page: number;
+  pandasPerPage?: number;
+}
+
 // let pandas; // stores a reference to the db
 
 /**
@@ -40,11 +46,7 @@ export default class PandasDAO {
     filters = {},
     page = 0,
     pandasPerPage = 10,
-  }: {
-    filters: Filter;
-    page: number;
-    pandasPerPage: number;
-  }): Promise<{
+  }: GetPandasOptions): Promise<{
     pandasList: Panda[];
     totalNumPandas: number;
     totalPages: number;
