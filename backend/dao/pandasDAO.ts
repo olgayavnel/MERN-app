@@ -69,9 +69,12 @@ export default class PandasDAO {
       return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
     }
 
+    // Make sure that page is at least 0
+    const positivePage = page >= 0 ? page : 0;
+
     const displayCursor = cursor
       .limit(pandasPerPage)
-      .skip(pandasPerPage * page);
+      .skip(pandasPerPage * positivePage);
 
     try {
       const pandasList = await displayCursor.toArray();

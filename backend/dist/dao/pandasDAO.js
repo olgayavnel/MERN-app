@@ -52,9 +52,11 @@ class PandasDAO {
                 console.error(`Unable to issue find command, ${e}`);
                 return { pandasList: [], totalNumPandas: 0, totalPages: 0 };
             }
+            // Make sure that page is at least 0
+            const positivePage = page >= 0 ? page : 0;
             const displayCursor = cursor
                 .limit(pandasPerPage)
-                .skip(pandasPerPage * page);
+                .skip(pandasPerPage * positivePage);
             try {
                 const pandasList = yield displayCursor.toArray();
                 const totalNumPandas = yield PandasDAO.pandas.countDocuments(query);

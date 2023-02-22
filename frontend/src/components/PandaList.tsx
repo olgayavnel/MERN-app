@@ -12,10 +12,20 @@ const PandaList: React.FC = () => {
   const [pandas, setPandas] = useState<Panda[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Panda[]>([]);
+
+  // useEffect(() => {
+  //   retrievePandas(currentPage);
+  // }, [currentPage]);
 
   useEffect(() => {
-    retrievePandas(currentPage);
-  }, [currentPage]);
+    if (searchQuery === '') {
+      retrievePandas(currentPage);
+    } else {
+      searchPandas(searchQuery);
+    }
+  }, [currentPage, searchQuery]);
 
   const retrievePandas = (pageNumber: number) => {
     pandasDataService
@@ -89,14 +99,56 @@ const PandaList: React.FC = () => {
     pageNumbers.push(i);
   }
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    if (searchQuery === '') {
+      setSearchResults([]);
+    } else {
+      searchPandas(searchQuery);
+    }
+  }, [searchQuery]);
+
+  const searchPandas = (searchQuery: string) => {
+    pandasDataService
+      .find(searchQuery)
+      .then((response) => {
+        setSearchResults(response.data.pandas);
+        setTotalPages(1);
+        setPandas([]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
+      <input
+        type='text'
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder='Search pandas…'
+      />
       <button onClick={() => setShowAddForm(!showAddForm)}>
         {showAddForm ? 'Cancel' : 'Add Panda'}
       </button>
       {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
 
-      {pandas.length > 0 && (
+      {searchResults.length > 0 ? (
+        <ul>
+          {searchResults.map((panda: any) => (
+            <li key={panda._id}>
+              Name: <Link to={`/pandas/${panda._id}`}>{panda.name}</Link> - Age:{' '}
+              {panda.age} - Location: {panda.location}
+              <button onClick={() => handleEdit(panda)}>Edit Panda</button>
+              <button onClick={() => handleDelete(panda._id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      ) : pandas.length > 0 ? (
         <ul>
           {pandas.map((panda: any) => (
             <li key={panda._id}>
@@ -107,7 +159,10 @@ const PandaList: React.FC = () => {
             </li>
           ))}
         </ul>
+      ) : (
+        <p>No pandas found.</p>
       )}
+
       {showEditForm && currentPanda && (
         <EditPandaForm
           panda={currentPanda}
