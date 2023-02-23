@@ -17,4 +17,4 @@ Backend Readme [backend Readme](backend/README.md)
 
 ### More on the frontend
 
-Frontend Readme [frontend Reamd](frontend/README.md)
+Frontend Readme [frontend Readme](frontend/README.md)
