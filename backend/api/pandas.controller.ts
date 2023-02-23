@@ -30,12 +30,24 @@ export default class PandasController {
       filters = { ...filters, name: req.query.name as string };
     }
 
-    const { pandasList, totalNumPandas, totalPages } =
-      await PandasDAO.getPandas({
+    let pandasList, totalNumPandas, totalPages;
+    if (Object.keys(filters).length === 0) {
+      // if there is no filter, then we get all the pandas
+      const result = await PandasDAO.getPandas({ page, pandasPerPage });
+      pandasList = result.pandasList;
+      totalNumPandas = result.totalNumPandas;
+      totalPages = result.totalPages;
+    } else {
+      // if there is a filter, then we get the pandas that match the filter
+      const result = await PandasDAO.getPandas({
         filters,
         page,
         pandasPerPage,
       });
+      pandasList = result.pandasList;
+      totalNumPandas = result.totalNumPandas;
+      totalPages = result.totalPages;
+    }
 
     let response = {
       pandas: pandasList,
@@ -119,22 +131,6 @@ export default class PandasController {
       const pandaResponse = await PandasDAO.deletePanda(pandaId);
       res.json({ status: 'success', response: pandaResponse });
     } catch (e) {
-      res.status(500).json({ error: e });
-    }
-  }
-
-  // handling the route of getting the detail of a single panda by name
-  static async apiGetPandaByName(req: Request, res: Response): Promise<void> {
-    try {
-      let name: string = req.params.name || '';
-      let pandaResponse = await PandasDAO.getPandaByName(name);
-      if (!pandaResponse) {
-        res.status(404).json({ error: 'Not found' });
-        return;
-      }
-      res.json(pandaResponse);
-    } catch (e) {
-      console.log(`api, ${e}`);
       res.status(500).json({ error: e });
     }
   }

@@ -19,6 +19,12 @@ interface GetPandasOptions {
   pandasPerPage?: number;
 }
 
+interface PaginatedPandas {
+  pandasList: Panda[];
+  totalNumPandas: number;
+  totalPages: number;
+}
+
 // let pandas; // stores a reference to the db
 
 /**
@@ -46,14 +52,12 @@ export default class PandasDAO {
     filters = {},
     page = 0,
     pandasPerPage = 10,
-  }: GetPandasOptions): Promise<{
-    pandasList: Panda[];
-    totalNumPandas: number;
-    totalPages: number;
-  }> {
-    let query = {};
+  }: GetPandasOptions): Promise<PaginatedPandas> {
+    let query = {}; // empty query that will be used to build a MongoDB query object
+    // if there are filters, then we build a MongoDB query object
     if (filters) {
       if ('name' in filters) {
+        // set the query object to search for the name in the filters object
         query = { $text: { $search: filters['name'] } };
       } else if ('age' in filters) {
         query = { age: { $eq: filters['age'] } };
@@ -146,22 +150,6 @@ export default class PandasDAO {
     } catch (e) {
       console.error(`Unable to delete panda, ${e}`);
       return { error: e };
-    }
-  }
-
-  static async getPandaByName(name: string) {
-    try {
-      const pipeline = [
-        {
-          $match: {
-            name: name,
-          },
-        },
-      ];
-      return await PandasDAO.pandas.aggregate(pipeline).next();
-    } catch (e) {
-      console.error(`Something went wrong in getPandaByName: ${e}`);
-      throw e;
     }
   }
 }
