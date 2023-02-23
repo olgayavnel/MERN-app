@@ -82,10 +82,14 @@ export default class PandasController {
       const pandaName: string = req.body.name;
       const pandaAge: number = req.body.age;
       const pandaLocation: string = req.body.location;
+      const pandaDescription: string = req.body.description;
+      const pandaImage: string = req.body.image;
       const pandaResponse = await PandasDAO.addPanda(
         pandaName,
         pandaAge,
-        pandaLocation
+        pandaLocation,
+        pandaDescription,
+        pandaImage
       );
       res.json({ status: 'success', response: pandaResponse });
     } catch (e) {
@@ -99,12 +103,16 @@ export default class PandasController {
       const pandaId: string = req.params.id;
       const pandaName: string = req.body.name;
       const pandaAge: number = req.body.age;
+      const pandaDescription: string = req.body.description;
+      const pandaImage: string = req.body.image;
       const pandaLocation: string = req.body.location;
       const pandaResponse: PandaUpdateResponse = await PandasDAO.updatePanda(
         pandaId,
         pandaName,
         pandaAge,
-        pandaLocation
+        pandaLocation,
+        pandaDescription,
+        pandaImage
       );
 
       if (pandaResponse.error) {

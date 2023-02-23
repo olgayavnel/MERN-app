@@ -5,6 +5,8 @@ interface Panda {
   name: string;
   age: number;
   location: string;
+  description?: string;
+  image?: string;
 }
 
 interface Filter {
@@ -111,9 +113,15 @@ export default class PandasDAO {
     }
   }
 
-  static async addPanda(name: string, age: number, location: string) {
+  static async addPanda(
+    name: string,
+    age: number,
+    location: string,
+    description?: string,
+    image?: string
+  ) {
     try {
-      const pandaDoc = { name, age, location };
+      const pandaDoc = { name, age, location, description, image };
       return await PandasDAO.pandas.insertOne(pandaDoc);
     } catch (e) {
       console.error(`Unable to post panda, ${e}`);
@@ -125,12 +133,14 @@ export default class PandasDAO {
     pandaId: string,
     name: string,
     age: number,
-    location: string
+    location: string,
+    description?: string,
+    image?: string
   ) {
     try {
       const updateResponse = await PandasDAO.pandas.updateOne(
         { _id: new ObjectId(pandaId) },
-        { $set: { name, age, location } }
+        { $set: { name, age, location, description, image } }
       );
 
       return updateResponse;
