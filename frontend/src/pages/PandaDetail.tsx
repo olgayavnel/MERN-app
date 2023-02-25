@@ -27,6 +27,8 @@ const PandaDetail: React.FC = () => {
       <h2>{panda.name}</h2>
       <p>Age: {panda.age}</p>
       <p>Location: {panda.location}</p>
+      <p>Description: {panda.description}</p>
+      <p>Image: {panda.image}</p>
     </div>
   );
 };

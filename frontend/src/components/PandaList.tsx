@@ -138,8 +138,7 @@ const PandaList: React.FC = () => {
           {searchResults.map((panda: any) => (
             <li key={panda._id}>
               Name: <Link to={`/pandas/${panda._id}`}>{panda.name}</Link> - Age:{' '}
-              {panda.age} - Location: {panda.location} - Description:{' '}
-              {panda.description} - Image: {panda.image}
+              {panda.age} - Location: {panda.location}
               <button onClick={() => handleEdit(panda)}>Edit Panda</button>
               <button onClick={() => handleDelete(panda._id)}>Delete</button>
             </li>
@@ -150,8 +149,7 @@ const PandaList: React.FC = () => {
           {pandas.map((panda: any) => (
             <li key={panda._id}>
               Name: <Link to={`/pandas/${panda._id}`}>{panda.name}</Link> - Age:{' '}
-              {panda.age} - Location: {panda.location} - Description:{' '}
-              {panda.description} - Image: {panda.image}
+              {panda.age} - Location: {panda.location}
               <button onClick={() => handleEdit(panda)}>Edit Panda</button>
               <button onClick={() => handleDelete(panda._id)}>Delete</button>
             </li>
