@@ -25,11 +25,11 @@ const EditPandaForm: React.FC<Props> = ({ panda, onSubmit, onCancel }) => {
     resolver: yupResolver(EditPandaFormSchema),
     defaultValues: {
       _id: panda._id,
-      name: panda.name,
-      age: panda.age,
-      location: panda.location,
-      description: panda.description,
-      image: panda.image,
+      name: panda.name || '',
+      age: panda.age || 0,
+      location: panda.location || '',
+      description: panda.description || '',
+      image: panda.image || '',
     },
   });
 
