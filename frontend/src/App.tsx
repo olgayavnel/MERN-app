@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PandaDetail from './pages/PandaDetail';
-import PandaList from './components/PandaList';
+import PandaDashboard from './components/PandaDashboard';
 import { NotFound } from './pages/NotFound';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className='mx-auto max-w-screen-lg p-4'>
+      <div className='mx-auto max-w-screen-lg p-4 bg-[#ececec]'>
         <Routes>
-          <Route path='/' element={<PandaList />} />
+          <Route path='/' element={<PandaDashboard />} />
           <Route path='/pandas/:id' element={<PandaDetail />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

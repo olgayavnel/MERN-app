@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --color-primary: #00204a;
-  --color-secondary: #005792;
-  --accent-color: #fdb44b;
+  --color-primary: #142d4c;
+  --color-secondary: #385170;
+  --accent-color: #9fd3c7;
   --font-size-small: 0.875rem;
   --font-size-medium: 1rem;
   --font-size-large: 1.25rem;
@@ -67,8 +67,23 @@ p {
 }
 
 /* Set maximum width for images */
-img {
+img,
+video {
   max-width: 100%;
+  height: auto;
+}
+
+/* Set display block on images and other replaced elements  */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
 }
 
 /* Add a bottom margin to headings, lists, paragraphs, blockquotes, figures, and definition lists */
