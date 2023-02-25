@@ -15,10 +15,6 @@ const PandaList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Panda[]>([]);
 
-  // useEffect(() => {
-  //   retrievePandas(currentPage);
-  // }, [currentPage]);
-
   useEffect(() => {
     if (searchQuery === '') {
       retrievePandas(currentPage);
