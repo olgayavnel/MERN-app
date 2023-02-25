@@ -51,6 +51,15 @@ dd {
   padding: 0;
 }
 
+/* Remove outline from all input fields */
+input {
+  outline: none;
+}
+
+input:focus {
+  outline: none;
+}
+
 /* Set default line height */
 body,
 p {
