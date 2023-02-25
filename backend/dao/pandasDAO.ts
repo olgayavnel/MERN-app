@@ -59,10 +59,9 @@ export default class PandasDAO {
     // if there are filters, then we build a MongoDB query object
     if (filters) {
       if ('name' in filters) {
-        // set the query object to search for the name in the filters object
         query = { $text: { $search: filters['name'] } };
       } else if ('age' in filters) {
-        query = { age: { $eq: filters['age'] } };
+        query = { age: { $eq: Number(filters['age']) } };
       } else if ('location' in filters) {
         query = { location: { $eq: filters['location'] } };
       }
