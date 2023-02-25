@@ -7,7 +7,7 @@ import { NotFound } from './pages/NotFound';
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className='main'>
+      <div className='mx-auto max-w-screen-lg p-4'>
         <Routes>
           <Route path='/' element={<PandaList />} />
           <Route path='/pandas/:id' element={<PandaDetail />} />
