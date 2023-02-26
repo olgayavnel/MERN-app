@@ -23,13 +23,15 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
+    reset,
   } = useForm<Panda>({
     resolver: yupResolver(AddPandaFormSchema),
   });
 
   const onSubmitHandler = (data: Panda) => {
     onSubmit(data);
+    reset(); // Reset the form after successful submission
   };
 
   return (
@@ -53,6 +55,9 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
       <input type='text' {...register('image')} placeholder='Panda Image' />
       {errors.image && <p>{errors.image.message}</p>}
       <button type='submit'>Add Panda</button>
+      <button type='button' disabled={!isDirty} onClick={() => reset()}>
+        Reset
+      </button>
     </form>
   );
 };

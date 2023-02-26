@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import pandasDataService from '../api/services';
 import AddPandaForm from './AddPandaForm';
-import EditPandaForm from './EditPandaForm';
 import { Panda } from './models';
 import PandaList from './PandaList';
 
 const PandaDashboard: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [currentPanda, setCurrentPanda] = useState<Panda | null>(null);
   const [pandas, setPandas] = useState<Panda[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -45,30 +43,6 @@ const PandaDashboard: React.FC = () => {
       .catch((e) => {
         console.log(e);
       });
-  };
-
-  const handleEditSubmit = (panda: Panda) => {
-    if (JSON.stringify(panda) === JSON.stringify(currentPanda)) {
-      setShowEditForm(false);
-      setCurrentPanda(null);
-      return;
-    }
-
-    pandasDataService
-      .update(currentPanda?._id, panda)
-      .then(() => {
-        retrievePandas(currentPage);
-        setShowEditForm(false);
-        setCurrentPanda(null);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const handleEdit = (panda: Panda) => {
-    setCurrentPanda(panda);
-    setShowEditForm(true);
   };
 
   const handleDelete = (pandaId: string) => {
@@ -134,31 +108,13 @@ const PandaDashboard: React.FC = () => {
       {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
 
       {searchResults.length > 0 ? (
-        <PandaList
-          pandas={searchResults}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+        <PandaList pandas={searchResults} handleDelete={handleDelete} />
       ) : pandas.length > 0 ? (
-        <PandaList
-          pandas={pandas}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+        <PandaList pandas={pandas} handleDelete={handleDelete} />
       ) : (
         <p>No pandas found.</p>
       )}
 
-      {showEditForm && currentPanda && (
-        <EditPandaForm
-          panda={currentPanda}
-          onSubmit={handleEditSubmit}
-          onCancel={() => {
-            setShowEditForm(false);
-            setCurrentPanda(null);
-          }}
-        />
-      )}
       <div>
         {totalPages > 1 && (
           <div>

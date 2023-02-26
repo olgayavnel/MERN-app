@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { FaEdit } from 'react-icons/fa';
+import { Link, useParams } from 'react-router-dom';
 import pandasDataService from '../api/services';
 import { Panda } from '../components/models';
 
@@ -24,6 +25,12 @@ const PandaDetail: React.FC = () => {
 
   return (
     <div>
+      <Link to='/' aria-label='Return to dashboard'>
+        Dashboard
+      </Link>
+      <Link to={`/pandas/${panda._id}/edit`} aria-label='Edit panda'>
+        <FaEdit />
+      </Link>
       <h2>{panda.name}</h2>
       <p>Age: {panda.age}</p>
       <p>Location: {panda.location}</p>

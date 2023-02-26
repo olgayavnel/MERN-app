@@ -5,11 +5,10 @@ import { Panda } from './models';
 
 interface Props {
   pandas: Panda[];
-  handleEdit: (panda: Panda) => void;
   handleDelete: (id: string) => void;
 }
 
-const PandaList: React.FC<Props> = ({ pandas, handleEdit, handleDelete }) => {
+const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
   return (
     <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4'>
       {pandas.map((panda: Panda) => (
@@ -23,16 +22,6 @@ const PandaList: React.FC<Props> = ({ pandas, handleEdit, handleDelete }) => {
             <p className='text-gray-600'>{panda.age} years old</p>
             <p className='text-gray-600 mb-4'>{panda.location}</p>
             <div className='absolute bottom-0 right-0 flex items-center space-x-2'>
-              <button
-                className='bg-transparent hover:bg-transparent'
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  handleEdit(panda);
-                }}
-              >
-                <FaEdit />
-              </button>
               <button
                 className='bg-transparent hover:bg-transparent'
                 onClick={(e) => {
