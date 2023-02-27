@@ -6,7 +6,6 @@ import PandaList from './PandaList';
 
 const PandaDashboard: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [currentPanda, setCurrentPanda] = useState<Panda | null>(null);
   const [pandas, setPandas] = useState<Panda[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -95,39 +94,52 @@ const PandaDashboard: React.FC = () => {
   };
 
   return (
-    <div>
-      <input
-        type='text'
-        value={searchQuery}
-        onChange={handleSearchChange}
-        placeholder='Search pandas…'
-      />
-      <button onClick={() => setShowAddForm(!showAddForm)}>
-        {showAddForm ? 'Cancel' : 'Add Panda'}
-      </button>
-      {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
-
-      {searchResults.length > 0 ? (
-        <PandaList pandas={searchResults} handleDelete={handleDelete} />
-      ) : pandas.length > 0 ? (
-        <PandaList pandas={pandas} handleDelete={handleDelete} />
-      ) : (
-        <p>No pandas found.</p>
-      )}
-
-      <div>
-        {totalPages > 1 && (
-          <div>
-            {pageNumbers.map((pageNumber) => (
-              <button
-                key={pageNumber}
-                onClick={() => handlePageClick(pageNumber)}
-              >
-                {pageNumber}
-              </button>
-            ))}
-          </div>
+    <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
+      <div className='mt-8'>
+        <div className='mb-4'>
+          <input
+            className='px-3 py-2 border border-gray-500 rounded-md'
+            type='text'
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder='Search pandas…'
+          />
+        </div>
+        <div className='mb-4'>
+          <button
+            className={`px-4 py-2  font-semibold rounded-md ${
+              showAddForm ? 'bg-orange-700' : ''
+            }`}
+            onClick={() => setShowAddForm(!showAddForm)}
+          >
+            {showAddForm ? 'Cancel' : 'Add Panda'}
+          </button>
+        </div>
+        {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
+        {searchResults.length > 0 ? (
+          <PandaList pandas={searchResults} handleDelete={handleDelete} />
+        ) : pandas.length > 0 ? (
+          <PandaList pandas={pandas} handleDelete={handleDelete} />
+        ) : (
+          <p>No pandas found.</p>
         )}
+        <div className='flex justify-center'>
+          {totalPages > 1 && (
+            <div className='flex gap-3'>
+              {pageNumbers.map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  onClick={() => handlePageClick(pageNumber)}
+                  className={`px-4 py-2 ${
+                    pageNumber === currentPage ? '' : 'bg-white'
+                  } font-semibold rounded-md`}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --color-primary: #142d4c;
   --color-secondary: #385170;
   --accent-color: #9fd3c7;
   --font-size-small: 0.875rem;
@@ -109,10 +110,6 @@ a {
   transition: color 0.15s ease-in-out;
 }
 
-a:hover {
-  color: var(--color-primary);
-}
-
 /* Style buttons */
 button {
   appearance: none;
@@ -131,5 +128,5 @@ button {
 
 button:hover {
   background-color: var(--accent-color);
-  color: var(--color-primary);
+  @apply bg-gray-800;
 }
