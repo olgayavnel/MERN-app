@@ -96,24 +96,26 @@ const PandaDashboard: React.FC = () => {
   return (
     <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
       <div className='mt-8'>
-        <div className='mb-4'>
-          <input
-            className='px-3 py-2 border border-gray-500 rounded-md'
-            type='text'
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder='Search pandas…'
-          />
-        </div>
-        <div className='mb-4'>
-          <button
-            className={`px-4 py-2  font-semibold rounded-md ${
-              showAddForm ? 'bg-orange-700' : ''
-            }`}
-            onClick={() => setShowAddForm(!showAddForm)}
-          >
-            {showAddForm ? 'Cancel' : 'Add Panda'}
-          </button>
+        <div className='flex flex-row justify-between'>
+          <div className='mb-4'>
+            <button
+              className={`px-4 py-2  font-semibold rounded-md ${
+                showAddForm ? 'bg-orange-700' : ''
+              }`}
+              onClick={() => setShowAddForm(!showAddForm)}
+            >
+              {showAddForm ? 'Cancel' : 'Add Panda'}
+            </button>
+          </div>
+          <div className='mb-4'>
+            <input
+              className='px-3 py-2 border border-gray-500 rounded-md'
+              type='text'
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder='Search pandas…'
+            />
+          </div>
         </div>
         {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
         {searchResults.length > 0 ? (

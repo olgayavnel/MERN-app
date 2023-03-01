@@ -16,23 +16,34 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
           <Link
             key={panda._id}
             to={`/pandas/${panda._id}`}
-            className='block group '
+            className='block group'
           >
-            <li className='relative px-6 py-8 transition-colors duration-200 transform bg-white shadow-md rounded-2xl hover:bg-gray-100'>
-              <h2 className='mb-2 text-2xl font-bold'>{panda.name}</h2>
-              <p className='text-gray-600'>{panda.age} years old</p>
-              <p className='mb-4 text-gray-600'>{panda.location}</p>
-              <div className='absolute bottom-0 right-0 flex items-center space-x-2'>
-                <button
-                  className='bg-transparent hover:bg-transparent'
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleDelete(panda._id);
-                  }}
-                >
-                  <FaTrash />
-                </button>
+            <li className='relative overflow-hidden transition-colors duration-200 transform bg-white shadow-md h-60 rounded-2xl hover:bg-gray-100'>
+              <div className='overflow-hidden h-1/2'>
+                <img
+                  src={panda.image}
+                  alt={panda.name}
+                  className='object-cover w-full h-full p-0 m-0 transition-transform duration-200 origin-top transform center hover:scale-110 '
+                />
+              </div>
+              <div className='px-6 py-8'>
+                <h2 className='my-2 text-2xl font-bold truncate'>
+                  {panda.name}
+                </h2>
+                <p className='text-gray-600'>{panda.age} years old</p>
+                <p className='mb-4 text-gray-600 truncate'>{panda.location}</p>
+                <div className='absolute bottom-0 right-0 flex items-center space-x-2'>
+                  <button
+                    className='bg-transparent hover:bg-transparent'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleDelete(panda._id);
+                    }}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </div>
             </li>
           </Link>

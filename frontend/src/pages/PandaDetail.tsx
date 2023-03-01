@@ -35,7 +35,7 @@ const PandaDetail: React.FC = () => {
       <p>Age: {panda.age}</p>
       <p>Location: {panda.location}</p>
       <p>Description: {panda.description}</p>
-      <p>Image: {panda.image}</p>
+      <img src={panda.image} alt={panda.name} />
     </div>
   );
 };
