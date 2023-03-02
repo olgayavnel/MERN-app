@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Link>
         </h1>
       </header>
-      <main className='flex-1 px-4 py-4'>{children}</main>
+      <main className='flex-1 px-4 py-4 md:overflow-hidden'>{children}</main>
       <footer className='px-6 py-4 bg-emerald-900 text-slate-50'>
         <p>&copy; 2023 Panda Management Tool</p>
       </footer>

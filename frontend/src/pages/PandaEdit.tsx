@@ -1,7 +1,24 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import pandasDataService from '../api/services';
+
+const EditPandaFormSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  age: Yup.number()
+    .integer('Age must be an integer')
+    .min(0, 'Age must be greater than or equal to 0')
+    .max(100, 'Age must be less than or equal to 100')
+    .required('Age is required'),
+  location: Yup.string().required('Location is required'),
+  description: Yup.string().max(
+    1000,
+    'Description must be at most 1000 characters'
+  ),
+  image: Yup.string(),
+});
 
 interface FormValues {
   name: string;
@@ -14,7 +31,14 @@ interface FormValues {
 const PandaEdit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setValue,
+  } = useForm<FormValues>({
+    resolver: yupResolver(EditPandaFormSchema),
+  });
 
   useEffect(() => {
     pandasDataService
@@ -56,81 +80,115 @@ const PandaEdit: React.FC = () => {
             Cancel
           </Link>
         </div>
+
         <form
           onSubmit={handleSubmit(handleEditSubmit)}
-          className='flex flex-col flex-grow max-w-xl gap-4 mx-auto'
+          className='flex flex-col flex-grow h-full max-w-3xl gap-4 mx-auto '
         >
           <h2 className='text-3xl font-extrabold text-emerald-900'>
             Edit Panda
           </h2>
-          <div className='flex items-center mt-2'>
-            <label htmlFor='name' className='mr-4 text-base text-gray-600'>
+
+          <div className='flex flex-col mt-2 md:flex-row md:items-center'>
+            <label
+              htmlFor='name'
+              className='mr-4 text-base text-gray-600 md:w-1/3'
+            >
               Name:
             </label>
             <input
-              className='w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               type='text'
               {...register('name')}
             />
+            {errors.name && (
+              <p className='text-xs italic text-red-500'>
+                {errors.name.message}
+              </p>
+            )}
           </div>
-          <div className='flex items-center mt-2'>
-            <label htmlFor='age' className='mr-4 text-base text-gray-600'>
+          <div className='flex flex-col mt-2 md:flex-row md:items-center'>
+            <label
+              htmlFor='age'
+              className='mr-4 text-base text-gray-600 md:w-1/3'
+            >
               Age:
             </label>
             <input
-              className='w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               type='number'
               {...register('age')}
             />
+            {errors.age && (
+              <p className='text-xs italic text-red-500'>
+                {errors.age.message}
+              </p>
+            )}
           </div>
-          <div className='flex items-center mt-2'>
-            <label htmlFor='location' className='mr-4 text-base text-gray-600'>
+          <div className='flex flex-col mt-2 md:flex-row md:items-center'>
+            <label
+              htmlFor='location'
+              className='mr-4 text-base text-gray-600 md:w-1/3'
+            >
               Location:
             </label>
             <input
-              className='w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               type='text'
               {...register('location')}
             />
+            {errors.location && (
+              <p className='text-xs italic text-red-500'>
+                {errors.location.message}
+              </p>
+            )}
           </div>
 
-          <div className='flex items-center mt-2'>
+          <div className='flex flex-col mt-2 md:flex-row md:items-center'>
             <label
               htmlFor='description'
-              className='mr-4 text-base text-gray-600'
+              className='mr-4 text-base text-gray-600 md:w-1/3'
             >
               Description:
             </label>
-            <input
-              className='w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
-              type='text'
+
+            <textarea
+              className='flex-1 w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              maxLength={1000}
               {...register('description')}
             />
+
+            {errors.description && (
+              <p className='text-xs italic text-red-500'>
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
-          <div className='flex items-center mt-2'>
-            <label htmlFor='image' className='mr-4 text-base text-gray-600'>
+          <div className='flex flex-col mt-2 md:flex-row md:items-center'>
+            <label
+              htmlFor='image'
+              className='mr-4 text-base text-gray-600 md:w-1/3'
+            >
               Image:
             </label>
             <input
-              className='w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               type='text'
               {...register('image')}
             />
+            {errors.image && (
+              <p className='text-xs italic text-red-500'>
+                {errors.image.message}
+              </p>
+            )}
           </div>
-          <div className='flex justify-between mt-4'>
+          <div className='flex self-end mt-4'>
             <button
               className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
               type='submit'
             >
               Submit
-            </button>
-            <button
-              className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-red-700 hover:text-slate-50'
-              type='button'
-              onClick={() => navigate(`/pandas/${id}`)}
-            >
-              Cancel
             </button>
           </div>
         </form>

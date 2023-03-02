@@ -38,7 +38,7 @@ const PandaDetail: React.FC = () => {
           Edit
         </Link>
       </div>
-      <div className='flex flex-col h-full max-w-xl mx-auto'>
+      <div className='flex flex-col h-full max-w-3xl mx-auto'>
         <h2 className='text-3xl font-extrabold text-emerald-900'>
           {panda.name}
         </h2>

@@ -12,8 +12,8 @@ const AddPandaFormSchema = Yup.object().shape({
     .required('Age is required'),
   location: Yup.string().required('Location is required'),
   description: Yup.string().max(
-    420,
-    'Description must be at most 420 characters'
+    1000,
+    'Description must be at most 1000 characters'
   ),
   image: Yup.string(),
 });
@@ -92,6 +92,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           </p>
         )}
       </div>
+
       <div className='w-full'>
         <label
           className='block mb-2 font-bold text-slate-50'
@@ -99,8 +100,9 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
         >
           Description
         </label>
+
         <textarea
-          maxLength={420}
+          maxLength={1000}
           className={`border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.description ? 'border-red-500' : ''
           } max-h-[10rem]`}
@@ -113,6 +115,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           </p>
         )}
       </div>
+
       <div className='w-full'>
         <label className='block mb-2 font-bold text-slate-50' htmlFor='image'>
           Image URL
