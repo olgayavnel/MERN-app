@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Link
             to='/'
             aria-label='Return to dashboard'
-            className=' text-slate-50 hover:text-yellow-200'
+            className='text-slate-50 hover:text-yellow-200 focus:text-yellow-200'
           >
             🐼 Happy Panda
           </Link>
@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
       <main className='flex-1 px-4 py-4 md:overflow-hidden'>{children}</main>
       <footer className='px-6 py-4 bg-emerald-900 text-slate-50'>
-        <p>&copy; 2023 Panda Management Tool</p>
+        <p>© 2023 Panda Management Tool</p>
       </footer>
     </div>
   );

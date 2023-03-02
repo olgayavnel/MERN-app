@@ -47,6 +47,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           Name
         </label>
         <input
+          id='name'
           className={`w-full border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.name ? 'border-red-500' : ''
           }`}
@@ -62,6 +63,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           Age
         </label>
         <input
+          id='age'
           className={`w-full border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.age ? 'border-red-500' : ''
           }`}
@@ -80,6 +82,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           Location
         </label>
         <input
+          id='location'
           className={`w-full border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.location ? 'border-red-500' : ''
           }`}
@@ -102,6 +105,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
         </label>
 
         <textarea
+          id='description'
           maxLength={1000}
           className={`border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.description ? 'border-red-500' : ''
@@ -121,6 +125,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           Image URL
         </label>
         <input
+          id='image'
           className={`w-full border rounded-md py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
             errors.image ? 'border-red-500' : ''
           }`}
@@ -133,6 +138,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
       </div>
       <div className='flex justify-between w-full'>
         <button
+          aria-label='Submit panda information'
           className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
           type='submit'
           disabled={!isDirty}
@@ -140,6 +146,7 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
           Add Panda
         </button>
         <button
+          aria-label='Reset panda information'
           className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-red-700 hover:text-slate-50'
           type='button'
           disabled={!isDirty}

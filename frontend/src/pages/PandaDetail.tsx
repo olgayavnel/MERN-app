@@ -58,7 +58,14 @@ const PandaDetail: React.FC = () => {
           className='object-cover w-full mt-4 rounded-lg shadow-lg h-96'
           src={panda.image}
           alt={panda.name}
+          role='img'
+          aria-label={panda.name}
         />
+        <div className='sr-only'>
+          <p>{panda.name}</p>
+          <p>{panda.age} years old</p>
+          <p>{panda.location}</p>
+        </div>
       </div>
     </div>
   );

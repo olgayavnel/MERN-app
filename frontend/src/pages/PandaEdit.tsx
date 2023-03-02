@@ -94,12 +94,14 @@ const PandaEdit: React.FC = () => {
               htmlFor='name'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Name:
+              Panda Name:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
               type='text'
               {...register('name')}
+              aria-label='Enter Panda Name'
+              required
             />
             {errors.name && (
               <p className='text-xs italic text-red-500'>
@@ -112,12 +114,14 @@ const PandaEdit: React.FC = () => {
               htmlFor='age'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Age:
+              Panda Age:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
               type='number'
               {...register('age')}
+              aria-label='Enter Panda Age'
+              required
             />
             {errors.age && (
               <p className='text-xs italic text-red-500'>
@@ -130,12 +134,14 @@ const PandaEdit: React.FC = () => {
               htmlFor='location'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Location:
+              Panda Location:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
               type='text'
               {...register('location')}
+              aria-label='Enter Panda Location'
+              required
             />
             {errors.location && (
               <p className='text-xs italic text-red-500'>
@@ -156,6 +162,8 @@ const PandaEdit: React.FC = () => {
               className='flex-1 w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               maxLength={1000}
               {...register('description')}
+              aria-label='Enter Panda Description'
+              required
             />
 
             {errors.description && (
@@ -176,6 +184,8 @@ const PandaEdit: React.FC = () => {
               className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
               type='text'
               {...register('image')}
+              aria-label='Enter Panda Image'
+              required
             />
             {errors.image && (
               <p className='text-xs italic text-red-500'>
@@ -187,6 +197,7 @@ const PandaEdit: React.FC = () => {
             <button
               className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
               type='submit'
+              aria-label='Submit Edit'
             >
               Submit
             </button>

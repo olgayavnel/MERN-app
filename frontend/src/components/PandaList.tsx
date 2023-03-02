@@ -17,12 +17,14 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
             key={panda._id}
             to={`/pandas/${panda._id}`}
             className='block group'
+            aria-label={`View details for ${panda.name}`}
           >
             <li className='relative overflow-hidden transition-colors duration-200 transform shadow-md bg-slate-50 h-72 rounded-2xl hover:bg-gray-100'>
               <div className='overflow-hidden h-1/2'>
                 <img
                   src={panda.image}
                   alt={panda.name}
+                  role='img'
                   className='object-cover w-full h-full p-0 m-0 transition-transform duration-200 origin-top transform center hover:scale-110 '
                 />
               </div>
@@ -34,6 +36,8 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
                 <p className='mb-4 text-gray-600 truncate'>{panda.location}</p>
                 <div className='absolute bottom-0 right-0 flex items-center space-x-2'>
                   <button
+                    title={`Delete ${panda.name}`}
+                    aria-label={`Delete ${panda.name}`}
                     className='bg-transparent hover:bg-transparent text-emerald-900'
                     onClick={(e) => {
                       e.stopPropagation();

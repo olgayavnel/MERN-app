@@ -95,7 +95,7 @@ const PandaDashboard: React.FC = () => {
 
   return (
     <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
-      <div className='mt-8 overflow-hidden'>
+      <section className='mt-8 overflow-hidden'>
         <div className='flex flex-row justify-between'>
           <div className='mb-4'>
             <button
@@ -103,22 +103,29 @@ const PandaDashboard: React.FC = () => {
                 showAddForm ? 'hidden' : ''
               }`}
               onClick={() => setShowAddForm(!showAddForm)}
+              aria-label='Add a new panda'
             >
               Add Panda
             </button>
           </div>
           <div className='mb-4'>
             <input
+              id='searchInput'
               className='px-3 py-2 border rounded-md border-emerald-700'
               type='text'
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder='Search pandas…'
+              title='Search pandas by name'
             />
           </div>
         </div>
         {showAddForm && (
-          <div className='fixed inset-0 z-10 flex items-center justify-center overflow-auto bg-slate-800 bg-opacity-80'>
+          <div
+            className='fixed inset-0 z-10 flex items-center justify-center overflow-auto bg-slate-800 bg-opacity-80'
+            role='dialog'
+            aria-modal='true'
+          >
             <button
               className='absolute top-0 right-0 mx-4 my-4 cursor-pointer bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
               onClick={() => setShowAddForm(false)}
@@ -130,13 +137,15 @@ const PandaDashboard: React.FC = () => {
             </div>
           </div>
         )}
-        {searchResults.length > 0 ? (
-          <PandaList pandas={searchResults} handleDelete={handleDelete} />
-        ) : pandas.length > 0 ? (
-          <PandaList pandas={pandas} handleDelete={handleDelete} />
-        ) : (
-          <p>No pandas found.</p>
-        )}
+        <article>
+          {searchResults.length > 0 ? (
+            <PandaList pandas={searchResults} handleDelete={handleDelete} />
+          ) : pandas.length > 0 ? (
+            <PandaList pandas={pandas} handleDelete={handleDelete} />
+          ) : (
+            <p>No pandas found.</p>
+          )}
+        </article>
         <div className='flex justify-center'>
           {totalPages > 1 && (
             <div className='flex gap-3'>
@@ -156,7 +165,7 @@ const PandaDashboard: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
