@@ -18,7 +18,7 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
             to={`/pandas/${panda._id}`}
             className='block group'
           >
-            <li className='relative overflow-hidden transition-colors duration-200 transform bg-white shadow-md h-60 rounded-2xl hover:bg-gray-100'>
+            <li className='relative overflow-hidden transition-colors duration-200 transform bg-white shadow-md h-72 rounded-2xl hover:bg-gray-100'>
               <div className='overflow-hidden h-1/2'>
                 <img
                   src={panda.image}
@@ -26,7 +26,7 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
                   className='object-cover w-full h-full p-0 m-0 transition-transform duration-200 origin-top transform center hover:scale-110 '
                 />
               </div>
-              <div className='px-6 py-8'>
+              <div className='px-6 py-3 overflow-hidden h-1/2'>
                 <h2 className='my-2 text-2xl font-bold truncate'>
                   {panda.name}
                 </h2>

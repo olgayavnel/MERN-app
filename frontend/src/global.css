@@ -71,7 +71,7 @@ p {
 img,
 video {
   max-width: 100%;
-  height: auto;
+  @apply max-h-80;
 }
 
 /* Set display block on images and other replaced elements  */

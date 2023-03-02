@@ -95,7 +95,7 @@ const PandaDashboard: React.FC = () => {
 
   return (
     <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
-      <div className='mt-8'>
+      <div className='mt-8 overflow-hidden'>
         <div className='flex flex-row justify-between'>
           <div className='mb-4'>
             <button
