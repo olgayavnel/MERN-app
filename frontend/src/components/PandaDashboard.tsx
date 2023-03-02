@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import pandasDataService from '../api/services';
 import AddPandaForm from './AddPandaForm';
-import { Panda } from './models';
+import { Panda } from '../models';
 import PandaList from './PandaList';
 
 const PandaDashboard: React.FC = () => {
@@ -99,12 +99,12 @@ const PandaDashboard: React.FC = () => {
         <div className='flex flex-row justify-between'>
           <div className='mb-4'>
             <button
-              className={`px-4 py-2  font-semibold rounded-md ${
-                showAddForm ? 'bg-red-700' : ''
+              className={`px-4 py-2 font-semibold rounded-md ${
+                showAddForm ? 'hidden' : ''
               }`}
               onClick={() => setShowAddForm(!showAddForm)}
             >
-              {showAddForm ? 'Cancel' : 'Add Panda'}
+              Add Panda
             </button>
           </div>
           <div className='mb-4'>
@@ -117,7 +117,19 @@ const PandaDashboard: React.FC = () => {
             />
           </div>
         </div>
-        {showAddForm && <AddPandaForm onSubmit={handleAddSubmit} />}
+        {showAddForm && (
+          <div className='fixed inset-0 z-10 flex items-center justify-center overflow-auto bg-slate-800 bg-opacity-80'>
+            <button
+              className='absolute top-0 left-0 mx-4 my-4 cursor-pointer'
+              onClick={() => setShowAddForm(false)}
+            >
+              &times;
+            </button>
+            <div className='max-w-md p-6 mx-auto my-10'>
+              <AddPandaForm onSubmit={handleAddSubmit} />
+            </div>
+          </div>
+        )}
         {searchResults.length > 0 ? (
           <PandaList pandas={searchResults} handleDelete={handleDelete} />
         ) : pandas.length > 0 ? (

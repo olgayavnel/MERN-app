@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { Panda } from './models';
+import { Panda } from '../models';
 
 interface Props {
   pandas: Panda[];
