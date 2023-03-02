@@ -120,7 +120,7 @@ const PandaDashboard: React.FC = () => {
         {showAddForm && (
           <div className='fixed inset-0 z-10 flex items-center justify-center overflow-auto bg-slate-800 bg-opacity-80'>
             <button
-              className='absolute top-0 left-0 mx-4 my-4 cursor-pointer'
+              className='absolute top-0 right-0 mx-4 my-4 cursor-pointer bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
               onClick={() => setShowAddForm(false)}
             >
               &times;
