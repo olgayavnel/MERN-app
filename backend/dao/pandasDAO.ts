@@ -53,7 +53,7 @@ export default class PandasDAO {
   static async getPandas({
     filters = {},
     page = 0,
-    pandasPerPage = 9,
+    pandasPerPage = 6,
   }: GetPandasOptions): Promise<PaginatedPandas> {
     let query = {}; // empty query that will be used to build a MongoDB query object
     // if there are filters, then we build a MongoDB query object

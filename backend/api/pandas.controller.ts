@@ -15,7 +15,7 @@ export default class PandasController {
   static async apiGetPandas(req: Request, res: Response): Promise<void> {
     const pandasPerPage: number = req.query.pandasPerPage
       ? parseInt(req.query.pandasPerPage as string, 10)
-      : 9;
+      : 6;
 
     const page: number = req.query.page
       ? parseInt(req.query.page as string, 10) - 1
