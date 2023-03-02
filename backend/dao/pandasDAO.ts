@@ -120,6 +120,13 @@ export default class PandasDAO {
     image?: string
   ) {
     try {
+      // Limit the description field to 420 characters
+      if (description && description.length > 420) {
+        throw new Error(
+          'Description field exceeds maximum length of 420 characters'
+        );
+      }
+
       const pandaDoc = { name, age, location, description, image };
       return await PandasDAO.pandas.insertOne(pandaDoc);
     } catch (e) {
@@ -137,6 +144,13 @@ export default class PandasDAO {
     image?: string
   ) {
     try {
+      // Limit the description field to 420 characters
+      if (description && description.length > 420) {
+        throw new Error(
+          'Description field exceeds maximum length of 420 characters'
+        );
+      }
+
       const updateResponse = await PandasDAO.pandas.updateOne(
         { _id: new ObjectId(pandaId) },
         { $set: { name, age, location, description, image } }
