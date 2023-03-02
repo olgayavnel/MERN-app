@@ -54,8 +54,18 @@ const AddPandaForm: React.FC<Props> = ({ onSubmit }) => {
       {errors.description && <p>{errors.description.message}</p>}
       <input type='text' {...register('image')} placeholder='Panda Image' />
       {errors.image && <p>{errors.image.message}</p>}
-      <button type='submit'>Add Panda</button>
-      <button type='button' disabled={!isDirty} onClick={() => reset()}>
+      <button
+        className='bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
+        type='submit'
+      >
+        Add Panda
+      </button>
+      <button
+        className='bg-slate-50 text-emerald-900 hover:bg-red-700 hover:text-slate-50'
+        type='button'
+        disabled={!isDirty}
+        onClick={() => reset()}
+      >
         Reset
       </button>
     </form>

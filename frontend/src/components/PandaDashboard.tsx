@@ -100,7 +100,7 @@ const PandaDashboard: React.FC = () => {
           <div className='mb-4'>
             <button
               className={`px-4 py-2  font-semibold rounded-md ${
-                showAddForm ? 'bg-orange-700' : ''
+                showAddForm ? 'bg-red-700' : ''
               }`}
               onClick={() => setShowAddForm(!showAddForm)}
             >
@@ -109,7 +109,7 @@ const PandaDashboard: React.FC = () => {
           </div>
           <div className='mb-4'>
             <input
-              className='px-3 py-2 border border-gray-500 rounded-md'
+              className='px-3 py-2 border rounded-md border-emerald-700'
               type='text'
               value={searchQuery}
               onChange={handleSearchChange}
@@ -133,7 +133,9 @@ const PandaDashboard: React.FC = () => {
                   key={pageNumber}
                   onClick={() => handlePageClick(pageNumber)}
                   className={`px-4 py-2 ${
-                    pageNumber === currentPage ? '' : 'bg-white'
+                    pageNumber === currentPage
+                      ? ''
+                      : 'bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
                   } font-semibold rounded-md`}
                 >
                   {pageNumber}

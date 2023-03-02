@@ -5,8 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --color-secondary: #385170;
-  --accent-color: #9fd3c7;
   --font-size-small: 0.875rem;
   --font-size-medium: 1rem;
   --font-size-large: 1.25rem;
@@ -85,6 +83,7 @@ embed,
 object {
   display: block;
   vertical-align: middle;
+  object-fit: cover;
 }
 
 /* Add a bottom margin to headings, lists, paragraphs, blockquotes, figures, and definition lists */
@@ -105,9 +104,13 @@ dl {
 
 /* Style links */
 a {
-  color: var(--color-secondary);
+  @apply text-emerald-900;
   text-decoration: none;
   transition: color 0.15s ease-in-out;
+}
+
+a:hover {
+  @apply text-emerald-900;
 }
 
 /* Style buttons */
@@ -116,8 +119,8 @@ button {
   border: none;
   border-radius: 0.25rem;
   padding: var(--spacing-small) var(--spacing-medium);
-  background-color: var(--color-secondary);
-  color: var(--accent-color);
+  @apply bg-emerald-900;
+  @apply text-slate-50;
   font-size: var(--font-size-medium);
   line-height: 1.5;
   text-align: center;
@@ -127,6 +130,6 @@ button {
 }
 
 button:hover {
-  background-color: var(--accent-color);
-  @apply bg-gray-800;
+  @apply bg-slate-50;
+  @apply text-emerald-900;
 }

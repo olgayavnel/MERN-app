@@ -63,8 +63,17 @@ const PandaEdit: React.FC = () => {
         Image:
         <input type='text' {...register('image')} />
       </label>
-      <button type='submit'>Save</button>
-      <button type='button' onClick={() => navigate(`/pandas/${id}`)}>
+      <button
+        className='bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
+        type='submit'
+      >
+        Submit
+      </button>
+      <button
+        className='bg-slate-50 text-emerald-900 hover:bg-red-700 hover:text-slate-50'
+        type='button'
+        onClick={() => navigate(`/pandas/${id}`)}
+      >
         Cancel
       </button>
     </form>
