@@ -120,10 +120,10 @@ export default class PandasDAO {
     image?: string
   ) {
     try {
-      // Limit the description field to 420 characters
-      if (description && description.length > 420) {
+      // Limit the description field to 1000 characters
+      if (description && description.length > 1000) {
         throw new Error(
-          'Description field exceeds maximum length of 420 characters'
+          'Description field exceeds maximum length of 1000 characters'
         );
       }
 
@@ -144,10 +144,10 @@ export default class PandasDAO {
     image?: string
   ) {
     try {
-      // Limit the description field to 420 characters
-      if (description && description.length > 420) {
+      // Limit the description field to 1000 characters
+      if (description && description.length > 1000) {
         throw new Error(
-          'Description field exceeds maximum length of 420 characters'
+          'Description field exceeds maximum length of 1000 characters'
         );
       }
 
