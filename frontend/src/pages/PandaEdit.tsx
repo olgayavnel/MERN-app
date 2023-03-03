@@ -97,7 +97,7 @@ const PandaEdit: React.FC = () => {
               Name:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500'
               type='text'
               {...register('name')}
               aria-label='Enter Panda Name'
@@ -117,7 +117,7 @@ const PandaEdit: React.FC = () => {
               Age:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500'
               type='number'
               {...register('age')}
               aria-label='Enter Panda Age'
@@ -137,7 +137,7 @@ const PandaEdit: React.FC = () => {
               Location:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500'
               type='text'
               {...register('location')}
               aria-label='Enter Panda Location'
@@ -159,7 +159,7 @@ const PandaEdit: React.FC = () => {
             </label>
 
             <textarea
-              className='flex-1 w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 w-full px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500'
               maxLength={1000}
               {...register('description')}
               aria-label='Enter Panda Description'
@@ -181,7 +181,7 @@ const PandaEdit: React.FC = () => {
               Image:
             </label>
             <input
-              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:shadow-outline'
+              className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500'
               type='text'
               {...register('image')}
               aria-label='Enter Panda Image'
@@ -195,7 +195,7 @@ const PandaEdit: React.FC = () => {
           </div>
           <div className='flex self-end mt-4'>
             <button
-              className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
+              className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-500'
               type='submit'
               aria-label='Submit Edit'
               disabled={!isDirty}

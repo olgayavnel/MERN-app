@@ -56,7 +56,7 @@ input {
 }
 
 input:focus {
-  @apply outline-orange-500;
+  outline: none;
 }
 
 /* Set default line height */
@@ -134,7 +134,6 @@ button:hover {
   @apply text-emerald-900;
 }
 
-button:focus,
-input:focus {
-  @apply outline-blue-900;
+button:focus {
+  outline: none;
 }
