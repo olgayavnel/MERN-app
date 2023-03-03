@@ -27,8 +27,6 @@ interface PaginatedPandas {
   totalPages: number;
 }
 
-// let pandas; // stores a reference to the db
-
 /**
  * The PandasDAO class provides a data access layer that interacts with the database to retrieve and store data.
  */
