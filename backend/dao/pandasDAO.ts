@@ -1,6 +1,6 @@
 import { Collection, Db, ObjectId } from 'mongodb';
 
-interface Panda {
+export interface Panda {
   _id?: ObjectId;
   name: string;
   age: number;

@@ -1,9 +1,18 @@
 import { Request, Response } from 'express';
-import PandasDAO from '../dao/pandasDAO';
+import PandasDAO, { Panda } from '../dao/pandasDAO';
 
 interface PandaUpdateResponse {
   modifiedCount?: number;
   error?: unknown;
+}
+
+interface PandaDataResponse {
+  pandas: Panda[];
+  page: number;
+  filters: Record<string, string>;
+  entries_per_page: number;
+  total_results: number;
+  totalPages: number;
 }
 
 /**
@@ -49,7 +58,7 @@ export default class PandasController {
       totalPages = result.totalPages;
     }
 
-    let response = {
+    let response: PandaDataResponse = {
       pandas: pandasList,
       page: page + 1,
       filters: filters,

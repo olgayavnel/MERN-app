@@ -24,6 +24,7 @@ const PandaDashboard: React.FC = () => {
     pandasDataService
       .getAll(pageNumber)
       .then((response) => {
+        console.log(response.data);
         setPandas(response.data.pandas);
         setTotalPages(response.data.totalPages);
       })

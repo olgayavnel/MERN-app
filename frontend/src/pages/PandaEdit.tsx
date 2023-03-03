@@ -42,7 +42,7 @@ const PandaEdit: React.FC = () => {
 
   useEffect(() => {
     pandasDataService
-      .getOne(id)
+      .getOne(id as string)
       .then((response) => {
         const { name, age, location, description, image } = response.data;
         setValue('name', name);
@@ -58,7 +58,7 @@ const PandaEdit: React.FC = () => {
 
   const handleEditSubmit = async (data: FormValues) => {
     try {
-      await pandasDataService.update(id, data);
+      await pandasDataService.update(id as string, data);
       navigate(`/pandas/${id}`);
     } catch (e) {
       console.log(e);
@@ -94,7 +94,7 @@ const PandaEdit: React.FC = () => {
               htmlFor='name'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Panda Name:
+              Name:
             </label>
             <input
               className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -114,7 +114,7 @@ const PandaEdit: React.FC = () => {
               htmlFor='age'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Panda Age:
+              Age:
             </label>
             <input
               className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -134,7 +134,7 @@ const PandaEdit: React.FC = () => {
               htmlFor='location'
               className='mr-4 text-base text-gray-600 md:w-1/3'
             >
-              Panda Location:
+              Location:
             </label>
             <input
               className='flex-1 px-4 py-6 text-lg leading-tight border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -198,6 +198,7 @@ const PandaEdit: React.FC = () => {
               className='px-4 py-2 rounded-md bg-slate-50 text-emerald-900 hover:bg-emerald-900 hover:text-slate-50'
               type='submit'
               aria-label='Submit Edit'
+              disabled={!isDirty}
             >
               Submit
             </button>

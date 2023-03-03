@@ -42,7 +42,7 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      handleDelete(panda._id);
+                      handleDelete(panda._id as string);
                     }}
                   >
                     <FaTrash />
