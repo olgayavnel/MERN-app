@@ -28,6 +28,7 @@ const PandaList: React.FC<Props> = ({ pandas, handleDelete }) => {
                   className='object-cover w-full h-full p-0 m-0 transition-transform duration-200 origin-top transform center hover:scale-110 '
                 />
               </div>
+
               <div className='px-6 py-3 overflow-hidden h-1/2'>
                 <h2 className='my-2 text-2xl font-bold truncate'>
                   {panda.name}

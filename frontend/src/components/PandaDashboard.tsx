@@ -24,7 +24,6 @@ const PandaDashboard: React.FC = () => {
     pandasDataService
       .getAll(pageNumber)
       .then((response) => {
-        console.log(response.data);
         setPandas(response.data.pandas);
         setTotalPages(response.data.totalPages);
       })
@@ -98,6 +97,7 @@ const PandaDashboard: React.FC = () => {
     <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
       <section className='mt-8 overflow-hidden'>
         <div className='flex flex-row justify-between'>
+          {/* Add panda */}
           <div className='mb-4'>
             <button
               className={`px-4 py-2 font-semibold rounded-md ${
@@ -109,6 +109,8 @@ const PandaDashboard: React.FC = () => {
               Add Panda
             </button>
           </div>
+
+          {/* Search Bar */}
           <div className='mb-4'>
             <input
               id='searchInput'
@@ -121,6 +123,8 @@ const PandaDashboard: React.FC = () => {
             />
           </div>
         </div>
+
+        {/* ADD FORM OVERLAY */}
         {showAddForm && (
           <div
             className='fixed inset-0 z-10 flex items-center justify-center overflow-auto bg-slate-800 bg-opacity-80'
@@ -138,6 +142,8 @@ const PandaDashboard: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* LIST OF PANDAS */}
         <article>
           {searchResults.length > 0 ? (
             <PandaList pandas={searchResults} handleDelete={handleDelete} />
@@ -147,6 +153,8 @@ const PandaDashboard: React.FC = () => {
             <p>No pandas found.</p>
           )}
         </article>
+
+        {/* PAGINATION */}
         <div className='flex justify-center'>
           {totalPages > 1 && (
             <div className='flex gap-3'>

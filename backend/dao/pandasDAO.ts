@@ -1,4 +1,4 @@
-import { Collection, Db, ObjectId } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 
 export interface Panda {
   _id?: ObjectId;
